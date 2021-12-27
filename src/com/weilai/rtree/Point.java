@@ -1,7 +1,5 @@
 package com.weilai.rtree;
 
-import java.util.Arrays;
-
 /**
  * @ClassName Point
  * @Description: n维空间中的点，所有的维度被存储在一个float数组中
@@ -55,7 +53,7 @@ public class Point {
 	}
 
 	/**
-	 * @return 返回 Point 的维度
+	 * @return 返回Point的维度
 	 */
 	public int getDimension() {
 		return data.length;
@@ -63,7 +61,7 @@ public class Point {
 
 	/**
 	 * @param index 下标
-	 * @return 返回 Point 坐标的第 i 位的 int 值
+	 * @return 返回Point坐标的第i位的int值
 	 */
 	public float getFloatCoordinate(int index) {
 		return data[index];
@@ -71,7 +69,7 @@ public class Point {
 
 	/**
 	 * @param index 下标
-	 * @return 返回 Point 坐标的第 i 位的 int 值
+	 * @return 返回Point坐标的第i位的int值
 	 */
 	public int getIntCoordinate(int index) {
 		return (int) data[index];
@@ -79,7 +77,7 @@ public class Point {
 
 	@Override
 	public boolean equals(Object obj) {
-		// obj 是 Point 的实例
+		// obj是Point的实例
 		if (obj instanceof Point) {
 			Point point = (Point) obj;
 
