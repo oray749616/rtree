@@ -20,7 +20,7 @@ public class Rtree {
         this.fillFactor = fillFactor;
         this.dimension = dimension;
         // 根节点的父节点为NULL
-        root = new RTDataNode(this, Constants.NULL);
+        root = new com.weilai.rTree.RTDataNode(this, Constants.NULL);
     }
 
     /**
@@ -74,7 +74,7 @@ public class Rtree {
             throw new IllegalArgumentException("Rectangle dimension different than RTree dimension.");
         }
 
-        RTDataNode leaf = root.chooseLeaf(rectangle);
+        RTDirNode leaf = root.chooseLeaf(rectangle);
 
         return leaf.insert(rectangle);
     }

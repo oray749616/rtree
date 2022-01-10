@@ -35,9 +35,9 @@ public abstract class RTNode {
      *
      * @param rectangle
      */
-    protected void addData(Rectangle rectangle) {
+    public void addData(Rectangle rectangle) {
         // 如果节点已用空间==r树的节点容量
-        if (usedSpace == rtree.getNodeCapacity()) {
+        if (usedSpace == rTree.getNodeCapacity()) {
             throw new IllegalArgumentException("Node is full.");
         }
         datas[usedSpace++] = rectangle;
@@ -65,7 +65,7 @@ public abstract class RTNode {
      *
      * @param list 存储删除结点中剩余条目
      */
-    protected void condenseTree(List<RTNode> list) {
+    protected void condenseTree(List<RTNode> list) throws CloneNotSupportedException {
         if (isRoot()) {
             // 根节点只有一个条目了，即只有左孩子或者右孩子 ，
             // 将唯一条目删除，释放根节点，将原根节点唯一的孩子设置为新根节点
@@ -75,13 +75,13 @@ public abstract class RTNode {
                 RTNode child = root.getChild(0);
                 root.children.remove(this);
                 child.parent = null;
-                rtree.setRoot(child);
+                rTree.setRoot(child);
 
             }
         } else {
             RTNode parent = getParent();
             // 计算节点最小容量，用于判断是否引起下溢
-            int min = Math.round(rtree.getNodeCapacity() * rtree.getFillFactor());
+            int min = Math.round(rTree.getNodeCapacity() * rTree.getFillFactor());
             if (usedSpace < min) {
                 parent.deleteData(parent.deleteIndex);// 其父节点中删除此条目
                 ((RTDirNode) parent).children.remove(this);
@@ -123,7 +123,7 @@ public abstract class RTNode {
         // 分裂后每个组只是有total/2个条目
         int c = total / 2 + 1;
         // 每个结点最小条目个数
-        int minNodeSize = Math.round(rtree.getNodeCapacity() * rtree.getFillFactor());
+        int minNodeSize = Math.round(rTree.getNodeCapacity() * rTree.getFillFactor());
         // 至少有两个
         if (minNodeSize < 2)
             minNodeSize = 2;
@@ -221,7 +221,7 @@ public abstract class RTNode {
                 rem--;
 
             }
-        } // end while
+        }
 
         int[][] ret = new int[2][];
         ret[0] = new int[i1];
@@ -309,7 +309,7 @@ public abstract class RTNode {
      * @param rectangle
      * @return RTDataNode
      */
-    protected abstract RTDataNode chooseLeaf(Rectangle rectangle) throws CloneNotSupportedException;
+    protected abstract com.weilai.rTree.RTDataNode chooseLeaf(Rectangle rectangle) throws CloneNotSupportedException;
 
     /**
      * R树的根节点为T，查找包含rectangle的叶子结点
@@ -320,5 +320,5 @@ public abstract class RTNode {
      * @param rectangle
      * @return 返回包含rectangle的叶节点
      */
-    protected abstract RTDataNode findLeaf(Rectangle rectangle);
+    protected abstract com.weilai.rTree.RTDataNode findLeaf(Rectangle rectangle);
 }

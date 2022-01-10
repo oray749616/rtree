@@ -1,4 +1,6 @@
-package com.weilai.rtree;
+package com.weilai.rTree;
+
+import com.weilai.rtree.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +15,8 @@ public class RTDataNode extends RTNode {
         super(rTree, parent, 0);
     }
 
-    public boolean insert(Rectangle rectangle) {
-        if (usedSpace < rtree.getNodeCapacity()) // 已用节点小于节点容量
+    public boolean insert(Rectangle rectangle) throws CloneNotSupportedException {
+        if (usedSpace < rTree.getNodeCapacity()) // 已用节点小于节点容量
         {
             datas[usedSpace++] = rectangle;
             RTDirNode parent = (RTDirNode) getParent();
@@ -34,8 +36,8 @@ public class RTDataNode extends RTNode {
 
             if (isRoot()) {
                 // 根节点已满，需要分裂。创建新的根节点
-                RTDirNode rDirNode = new RTDirNode(rtree, Constants.NULL, level + 1);
-                rtree.setRoot(rDirNode);
+                RTDirNode rDirNode = new RTDirNode(rTree, Constants.NULL, level + 1);
+                rTree.setRoot(rDirNode);
                 // getNodeRectangle()返回包含结点中所有条目的最小Rectangle
                 rDirNode.addData(l.getNodeRectangle());
                 rDirNode.addData(ll.getNodeRectangle());
@@ -78,17 +80,17 @@ public class RTDataNode extends RTNode {
                     if (node.isLeaf())// 叶子结点，直接把其上的数据重新插入
                     {
                         for (int k = 0; k < node.usedSpace; k++) {
-                            rtree.insert(node.datas[k]);
+                            rTree.insert(node.datas[k]);
                         }
                     } else {// 非叶子结点，需要先后序遍历出其上的所有结点
-                        List<RTNode> traverseNodes = rtree.traversePostOrder(node);
+                        List<RTNode> traverseNodes = rTree.traversePostOrder(node);
 
                         // 把其中的叶子结点中的条目重新插入
                         for (int index = 0; index < traverseNodes.size(); index++) {
                             RTNode traverseNode = traverseNodes.get(index);
                             if (traverseNode.isLeaf()) {
                                 for (int t = 0; t < traverseNode.usedSpace; t++) {
-                                    rtree.insert(traverseNode.datas[t]);
+                                    rTree.insert(traverseNode.datas[t]);
                                 }
                             }
                         }
@@ -112,7 +114,7 @@ public class RTDataNode extends RTNode {
     public RTDataNode[] splitLeaf(Rectangle rectangle) {
         int[][] group = null;
 
-        switch (rtree.getTreeType()) {
+        switch (rTree.getTreeType()) {
             case Constants.RTREE_LINEAR:
                 break;
             case Constants.RTREE_QUADRATIC:
@@ -126,8 +128,8 @@ public class RTDataNode extends RTNode {
                 throw new IllegalArgumentException("Invalid tree type.");
         }
 
-        RTDataNode l = new RTDataNode(rtree, parent);
-        RTDataNode ll = new RTDataNode(rtree, parent);
+        RTDataNode l = new RTDataNode(rTree, parent);
+        RTDataNode ll = new RTDataNode(rTree, parent);
 
         int[] group1 = group[0];
         int[] group2 = group[1];
