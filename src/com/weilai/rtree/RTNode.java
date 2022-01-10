@@ -309,7 +309,7 @@ public abstract class RTNode {
      * @param rectangle
      * @return RTDataNode
      */
-    protected abstract com.weilai.rTree.RTDataNode chooseLeaf(Rectangle rectangle) throws CloneNotSupportedException;
+    protected abstract RTDataNode chooseLeaf(Rectangle rectangle) throws CloneNotSupportedException;
 
     /**
      * R树的根节点为T，查找包含rectangle的叶子结点
@@ -320,5 +320,5 @@ public abstract class RTNode {
      * @param rectangle
      * @return 返回包含rectangle的叶节点
      */
-    protected abstract com.weilai.rTree.RTDataNode findLeaf(Rectangle rectangle);
+    protected abstract RTDataNode findLeaf(Rectangle rectangle);
 }

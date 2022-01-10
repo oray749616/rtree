@@ -20,7 +20,7 @@ public class Rtree {
         this.fillFactor = fillFactor;
         this.dimension = dimension;
         // 根节点的父节点为NULL
-        root = new com.weilai.rTree.RTDataNode(this, Constants.NULL);
+        root = new RTDataNode(this, Constants.NULL);
     }
 
     /**
@@ -66,7 +66,7 @@ public class Rtree {
      * @param rectangle 外包矩阵
      * @return 叶节点
      */
-    public boolean insert(Rectangle rectangle) {
+    public boolean insert(Rectangle rectangle) throws CloneNotSupportedException {
         if (rectangle == null) {
             throw new IllegalArgumentException("Rectangle cannot be null.");
         }
@@ -74,7 +74,7 @@ public class Rtree {
             throw new IllegalArgumentException("Rectangle dimension different than RTree dimension.");
         }
 
-        RTDirNode leaf = root.chooseLeaf(rectangle);
+        RTDataNode leaf = root.chooseLeaf(rectangle);
 
         return leaf.insert(rectangle);
     }
@@ -88,7 +88,7 @@ public class Rtree {
      * @param rectangle 外包节点
      * @return 叶节点
      */
-    public int delete(Rectangle rectangle) {
+    public int delete(Rectangle rectangle) throws CloneNotSupportedException {
         if (rectangle == null) {
             throw new IllegalArgumentException("Rectangle can't be null.");
         }
@@ -96,7 +96,7 @@ public class Rtree {
             throw new IllegalArgumentException("Rectangle dimension different than RTree dimension.");
         }
 
-        RTNode leaf = root.findLeaf(rectangle);
+        RTDataNode leaf = root.findLeaf(rectangle);
 
         if (leaf != null) {
             return leaf.delete(rectangle);

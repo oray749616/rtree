@@ -1,6 +1,4 @@
-package com.weilai.rTree;
-
-import com.weilai.rtree.*;
+package com.weilai.rtree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +64,7 @@ public class RTDataNode extends RTNode {
      * @param rectangle
      * @return
      */
-    protected int delete(Rectangle rectangle) {
+    protected int delete(Rectangle rectangle) throws CloneNotSupportedException {
         for (int i = 0; i < usedSpace; i++) {
             if (datas[i].equals(rectangle)) {
                 deleteData(i);
@@ -111,7 +109,7 @@ public class RTDataNode extends RTNode {
      * @param rectangle
      * @return
      */
-    public RTDataNode[] splitLeaf(Rectangle rectangle) {
+    public RTDataNode[] splitLeaf(Rectangle rectangle) throws CloneNotSupportedException {
         int[][] group = null;
 
         switch (rTree.getTreeType()) {
