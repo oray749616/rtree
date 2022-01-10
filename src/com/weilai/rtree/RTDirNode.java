@@ -25,7 +25,7 @@ public class RTDirNode extends RTNode {
     }
 
     @Override
-    protected com.weilai.rTree.RTDataNode chooseLeaf(Rectangle rectangle) throws CloneNotSupportedException {
+    protected RTDataNode chooseLeaf(Rectangle rectangle) throws CloneNotSupportedException {
         int index;
 
         switch (rTree.getTreeType()) {
@@ -58,11 +58,11 @@ public class RTDirNode extends RTNode {
     }
 
     @Override
-    protected com.weilai.rTree.RTDataNode findLeaf(Rectangle rectangle) {
+    protected RTDataNode findLeaf(Rectangle rectangle) {
         for (int i = 0; i < usedSpace; i++) {
             if (datas[i].enclosure(rectangle)) {
                 deleteIndex = i;
-                com.weilai.rTree.RTDataNode leaf = children.get(i).findLeaf(rectangle);
+                RTDataNode leaf = children.get(i).findLeaf(rectangle);
                 if (leaf != null)
                     return leaf;
             }
